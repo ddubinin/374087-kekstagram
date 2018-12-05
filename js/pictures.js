@@ -172,7 +172,10 @@ uploadInput.addEventListener('change', uploadOpen);
 // ***
 
 // добавляем фильтры
-// var effects = [];
+
+var effectBar = document.querySelector('.img-upload__effect-level');
+effectBar.classList.add('hidden');
+
 var effects = document.querySelectorAll('.effects__preview');
 effects.forEach(function (element) {
   element.addEventListener('click', function () {
@@ -183,7 +186,13 @@ effects.forEach(function (element) {
 
 var getEffectPicture = function (effect) {
   var uploadImg = document.querySelector('.img-upload__preview img');
-  uploadImg.classList = '';
+  uploadImg.classList = ''; // чистим класс
   uploadImg.style = '';
-  uploadImg.classList.add(effect);
+  uploadImg.classList.add(effect); // навешиваем класс
+
+  if (uploadImg.classList !== 'effects__preview--none') {
+    effectBar.classList.remove('hidden');
+  } else {
+    effectBar.classList.add('hidden');
+  }
 };
