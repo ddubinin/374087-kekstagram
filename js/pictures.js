@@ -5,9 +5,9 @@ var bigPicture = document.querySelector('.big-picture');
 var elementBody = document.body;
 var pictureListElement = document.querySelector('.pictures'); // ищу элемент с .pictures
 var pictureCardTemple = document
-.querySelector('#picture') // ищу #picture
-.content
-.querySelector('.picture'); // в нем ищу .picture
+    .querySelector('#picture') // ищу #picture
+    .content
+    .querySelector('.picture'); // в нем ищу .picture
 
 var commentsTemplate = bigPicture.querySelector('.social__comment');
 
@@ -67,23 +67,16 @@ var getPictures = function (pictureNum) {
   return picture;
 };
 
-var pictureListElement = document.querySelector('.pictures'); // ищу элемент с .pictures
-var pictureCardTemple = document
-  .querySelector('#picture') // ищу #picture
-  .content // (?!)
-  .querySelector('.picture'); // в нем ищу .picture
-
 var createCardPicture = function (picture) {
   var pictureElement = pictureCardTemple.cloneNode(true); // клонирую .picture в #picture
   pictureElement.querySelector('.picture__img').src = picture.url; // ищу .picture__img и дабавляю src
   pictureElement.querySelector('.picture__likes').textContent = picture.likes; // ищу .picture__likes прописываю лайки
-  
+
   pictureElement.querySelector('.picture__comments').textContent = picture.comments.length; // ищу .picture__comments и прописываю комменты
 
   pictureElement.addEventListener('click', function () {
     renderBigPicture(picture);
   });
-
   return pictureElement;
 };
 
@@ -106,7 +99,7 @@ var renderBigPicture = function (picture) {
 
     var commentElement = commentsTemplate.cloneNode(true);
     commentElement.querySelector('.social__picture').src =
-      'img/avatar-' + getRandomNum(6, 1) + '.svg';
+            'img/avatar-' + getRandomNum(6, 1) + '.svg';
     commentElement.querySelector('.social__text').textContent = item;
     commentsFragment.appendChild(commentElement);
   });
@@ -114,11 +107,11 @@ var renderBigPicture = function (picture) {
   bigPicture.querySelector('.big-picture__img img').src = picture.url;
   bigPicture.querySelector('.likes-count').textContent = picture.likes;
   bigPicture.querySelector('.comments-count').textContent =
-    picture.comments.length;
+        picture.comments.length;
   bigPicture.querySelector('.social__comments').innerHTML = '';
   bigPicture.querySelector('.social__comments').appendChild(commentsFragment);
   bigPicture.querySelector('.social__caption').textContent =
-    picture.description;
+        picture.description;
 };
 
 var socialCommentCount = document.querySelector('.social__comment-count');
@@ -168,8 +161,8 @@ var uploadFormClose = function () {
 var uploadOpen = function () {
   uploadForm.classList.remove('hidden');
   uploadForm
-  .querySelector('.img-upload__cancel')
-  .addEventListener('click', uploadFormClose);
+        .querySelector('.img-upload__cancel')
+        .addEventListener('click', uploadFormClose);
   document.addEventListener('keydown', uploadFormEscClose);
 };
 
