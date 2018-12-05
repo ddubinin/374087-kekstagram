@@ -1,6 +1,4 @@
 'use strict';
-
-
 var ESC_KEYCODE = 27;
 
 var bigPicture = document.querySelector('.big-picture');
@@ -12,6 +10,7 @@ var pictureCardTemple = document
 .querySelector('.picture'); // в нем ищу .picture
 
 var commentsTemplate = bigPicture.querySelector('.social__comment');
+
 // создаю массив комментов
 var comments = [
   'Всё отлично!',
@@ -68,10 +67,17 @@ var getPictures = function (pictureNum) {
   return picture;
 };
 
+var pictureListElement = document.querySelector('.pictures'); // ищу элемент с .pictures
+var pictureCardTemple = document
+  .querySelector('#picture') // ищу #picture
+  .content // (?!)
+  .querySelector('.picture'); // в нем ищу .picture
+
 var createCardPicture = function (picture) {
   var pictureElement = pictureCardTemple.cloneNode(true); // клонирую .picture в #picture
   pictureElement.querySelector('.picture__img').src = picture.url; // ищу .picture__img и дабавляю src
   pictureElement.querySelector('.picture__likes').textContent = picture.likes; // ищу .picture__likes прописываю лайки
+  
   pictureElement.querySelector('.picture__comments').textContent = picture.comments.length; // ищу .picture__comments и прописываю комменты
 
   pictureElement.addEventListener('click', function () {
@@ -80,7 +86,6 @@ var createCardPicture = function (picture) {
 
   return pictureElement;
 };
-
 
 var renderPictures = function () {
   var fragment = document.createDocumentFragment();
@@ -91,7 +96,6 @@ var renderPictures = function () {
   pictureListElement.appendChild(fragment);
 };
 
-
 var renderBigPicture = function (picture) {
   bigPicture.classList.remove('hidden');
   elementBody.classList.add('modal-open');
@@ -99,6 +103,7 @@ var renderBigPicture = function (picture) {
   var commentsFragment = document.createDocumentFragment();
   // собираем комментарии
   picture.comments.forEach(function (item) {
+
     var commentElement = commentsTemplate.cloneNode(true);
     commentElement.querySelector('.social__picture').src =
       'img/avatar-' + getRandomNum(6, 1) + '.svg';
