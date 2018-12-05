@@ -1,4 +1,16 @@
 'use strict';
+var ESC_KEYCODE = 27;
+
+var bigPicture = document.querySelector('.big-picture');
+var elementBody = document.body;
+var pictureListElement = document.querySelector('.pictures'); // ищу элемент с .pictures
+var pictureCardTemple = document
+    .querySelector('#picture') // ищу #picture
+    .content
+    .querySelector('.picture'); // в нем ищу .picture
+
+var commentsTemplate = bigPicture.querySelector('.social__comment');
+
 // создаю массив комментов
 var comments = [
   'Всё отлично!',
@@ -27,13 +39,12 @@ var getRandomNum = function (max, min) {
 
 // рандомный элемент из массива
 var getRandomElement = function (array) {
-  // return array[Math.floor(Math.random() * array.length)];
   return array[getRandomNum(array.length, 0)];
 };
 
 var getComments = function (allComents) {
   var fncComments = [];
-  for (var i = 0; i < getRandomNum(0, 3); i++) {
+  for (var i = 0; i < getRandomNum(0, 5); i++) {
     fncComments.push(allComents[getRandomNum(0, 5)]);
   }
   return fncComments;
@@ -56,18 +67,16 @@ var getPictures = function (pictureNum) {
   return picture;
 };
 
-var pictureListElement = document.querySelector('.pictures'); // ищу элемент с .pictures
-var pictureCardTemple = document
-  .querySelector('#picture') // ищу #picture
-  .content // (?!)
-  .querySelector('.picture'); // в нем ищу .picture
-
 var createCardPicture = function (picture) {
   var pictureElement = pictureCardTemple.cloneNode(true); // клонирую .picture в #picture
   pictureElement.querySelector('.picture__img').src = picture.url; // ищу .picture__img и дабавляю src
   pictureElement.querySelector('.picture__likes').textContent = picture.likes; // ищу .picture__likes прописываю лайки
-  pictureElement.querySelector('.picture__comments').textContent =
-    picture.comments.length; // ищу .picture__comments и прописываю комменты
+
+  pictureElement.querySelector('.picture__comments').textContent = picture.comments.length; // ищу .picture__comments и прописываю комменты
+
+  pictureElement.addEventListener('click', function () {
+    renderBigPicture(picture);
+  });
   return pictureElement;
 };
 
@@ -80,33 +89,29 @@ var renderPictures = function () {
   pictureListElement.appendChild(fragment);
 };
 
-
-var renderBigPicture = function () {
-  var bigPicture = document.querySelector('.big-picture');
+var renderBigPicture = function (picture) {
   bigPicture.classList.remove('hidden');
-  var bigPicturePhoto = photos[0];
-  var commentsFragment = document.createDocumentFragment();
-  var commentsTemplate = bigPicture.querySelector('.social__comment');
+  elementBody.classList.add('modal-open');
 
+  var commentsFragment = document.createDocumentFragment();
   // собираем комментарии
-  bigPicturePhoto.comments.forEach(function (item) {
+  picture.comments.forEach(function (item) {
+
     var commentElement = commentsTemplate.cloneNode(true);
     commentElement.querySelector('.social__picture').src =
-      'img/avatar-' + getRandomNum(6, 1) + '.svg';
+            'img/avatar-' + getRandomNum(6, 1) + '.svg';
     commentElement.querySelector('.social__text').textContent = item;
     commentsFragment.appendChild(commentElement);
   });
 
-  bigPicture.querySelector('.big-picture__img img').src = bigPicturePhoto.url;
-  bigPicture.querySelector('.likes-count').textContent = bigPicturePhoto.likes;
+  bigPicture.querySelector('.big-picture__img img').src = picture.url;
+  bigPicture.querySelector('.likes-count').textContent = picture.likes;
   bigPicture.querySelector('.comments-count').textContent =
-    bigPicturePhoto.comments.length;
+        picture.comments.length;
   bigPicture.querySelector('.social__comments').innerHTML = '';
-  bigPicture
-    .querySelector('.social__comments')
-		.appendChild(commentsFragment);
+  bigPicture.querySelector('.social__comments').appendChild(commentsFragment);
   bigPicture.querySelector('.social__caption').textContent =
-    bigPicturePhoto.description;
+        picture.description;
 };
 
 var socialCommentCount = document.querySelector('.social__comment-count');
@@ -116,4 +121,76 @@ var commentsLoader = document.querySelector('.comments-loader');
 commentsLoader.classList.add('visually-hidden');
 
 renderPictures();
-renderBigPicture();
+
+// закрытие большой картинки
+var getCloseBigPicture = function () {
+  elementBody.classList.remove('modal-open');
+  bigPicture.classList.add('hidden');
+  var inputFile = document.querySelector('.img-upload__input');
+  inputFile.val = '';
+};
+// закрытие по клику
+var CloseBigPicture = document.querySelector('.big-picture__cancel');
+CloseBigPicture.addEventListener('click', function () {
+  getCloseBigPicture();
+});
+// закрытие на ESC
+document.addEventListener('keydown', function (evt) {
+  if (evt.keyCode === ESC_KEYCODE) {
+    getCloseBigPicture();
+  }
+});
+
+// загрзузка своей картинки
+var uploadInput = document.querySelector('#upload-file');
+var uploadForm = document.querySelector('.img-upload__overlay');
+
+var uploadFormEscClose = function (evt) {
+  if (evt.keyCode === ESC_KEYCODE) {
+    uploadInput.value = '';
+    uploadFormClose();
+  }
+};
+
+var uploadFormClose = function () {
+  uploadForm.classList.add('hidden');
+  uploadInput.value = '';
+  document.removeEventListener('keydown', uploadFormEscClose);
+};
+
+var uploadOpen = function () {
+  uploadForm.classList.remove('hidden');
+  uploadForm
+        .querySelector('.img-upload__cancel')
+        .addEventListener('click', uploadFormClose);
+  document.addEventListener('keydown', uploadFormEscClose);
+};
+
+uploadInput.addEventListener('change', uploadOpen);
+// ***
+
+// добавляем фильтры
+
+var effectBar = document.querySelector('.img-upload__effect-level');
+effectBar.classList.add('hidden');
+
+var effects = document.querySelectorAll('.effects__preview');
+effects.forEach(function (element) {
+  element.addEventListener('click', function () {
+    var allClassEffect = element.classList;
+    getEffectPicture(allClassEffect[1]);
+  });
+});
+
+var getEffectPicture = function (effect) {
+  var uploadImg = document.querySelector('.img-upload__preview img');
+  uploadImg.classList = ''; // чистим класс
+  uploadImg.style = '';
+  uploadImg.classList.add(effect); // навешиваем класс
+
+  if (uploadImg.classList !== 'effects__preview--none') {
+    effectBar.classList.remove('hidden');
+  } else {
+    effectBar.classList.add('hidden');
+  }
+};
