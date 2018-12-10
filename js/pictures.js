@@ -189,10 +189,10 @@ var getEffectPicture = function (effect) {
   uploadImg.style = '';
   uploadImg.classList.add(effect); // навешиваем класс
 
-  if (uploadImg.classList !== 'effects__preview--none') {
-    effectBar.classList.remove('hidden');
-  } else {
+  if (uploadImg.classList == 'effects__preview--none') {
     effectBar.classList.add('hidden');
+  } else {
+    effectBar.classList.remove('hidden');
   }
 };
 // хэштег
@@ -268,3 +268,90 @@ var checkTagRepit = function (tags) {
   return validationError;
 };
 
+
+
+
+
+
+
+
+// навешиваю стили в зависимости от класса
+
+var uploadPreviewImg = document.querySelector('.img-upload__preview');
+var getEffectValue = function (effectClass, proportion) {
+  var effect = '';
+  switch (effectClass) {
+    case 'effects__preview--chrome':
+      effect = 'grayscale('+ proportion +')';
+      break;
+    case 'effects__preview--sepia':
+      effect = 'sepia('+ proportion +')';
+      break;
+    case 'marvin':
+      effect = 'invert(' + (proportion * 100) + '%)';
+      break;
+    case 'phobos':
+      effect = 'blur(' + (proportion * 3).toFixed(2) + 'px)';
+      break;
+    case 'heat':
+      effect = 'brightness(' + ((proportion * (3 - 1)) + 1).toFixed(2) + ')';
+      break;
+    default:
+      break;
+    }
+    uploadPreviewImg.style.filter = effect;
+  };
+
+var uploadScale = document.querySelector('.effect-level');
+var effectPin = uploadScale.querySelector('effect-level__line'); // полоска вся
+var effectPinLevel = uploadScale.querySelector('.effect-level__pin'); // кружок
+var effectPinDepth = uploadScale.querySelector('.effect-level__depth'); // полоска закращенная
+var effectLevelInput = uploadScale.querySelector('.effect-level__value');
+var previewCassName = document.querySelector('.img-upload__preview img');
+console.log(previewCassName); // но почему-то нет класса
+// className надо чтобы калсс получить
+
+// ловлю координаты спина
+effectPinLevel.addEventListener('mousedown', function (evt) {
+  evt.preventDefault();
+// начальные координаты
+  var startCoords = {
+    x: evt.clientX
+  };
+
+  var onMouseMove = function (moveEvt) {
+    moveEvt.preventDefault();
+// движение координат по нажатию мыши
+    var shift = {
+      x: startCoords.x - moveEvt.clientX
+    };
+
+    startCoords = {
+      x: moveEvt.clientX
+    };
+
+    var value;
+    // if (moveEvt.clientX > effectPin.getBoundingClientRect()) {
+    //   value = effectPin.offsetWidth  + 'px';
+    // } else if (moveEvt.clientX < effectPin.getBoundingClientRect()) {
+    //   value = '0px';
+    // } else {
+    //   value = (effectPinLevel.offsetLeft  - shift.x) + 'px';
+    // }
+    effectPinLevel.style.left = value;
+    effectPinDepth.style.width = value;
+
+    // var proportion = (effectPinLevel / effectPin).toFixed(2);
+    // effectLevelInput.value = proporton * 100;
+
+    // getEffectValue(previewCassName,proportion);
+
+  };
+
+  var onMouseUp = function () {
+    document.removeEventListener('mousemove', onMouseMove);
+    document.removeEventListener('mouseup', onMouseUp);
+  };
+  document.addEventListener('mousemove', onMouseMove);
+  document.addEventListener('mouseup', onMouseUp);
+});
