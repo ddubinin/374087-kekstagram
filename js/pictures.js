@@ -141,7 +141,6 @@ document.addEventListener('keydown', function (evt) {
   }
 });
 
-
 // загрзузка своей картинки
 var uploadInput = document.querySelector('#upload-file');
 var uploadForm = document.querySelector('.img-upload__overlay');
@@ -195,7 +194,7 @@ var getEffectPicture = function (effect) {
     effectBar.classList.add('hidden');
   }
 };
-// хэштег
+
 var hashtagInput = document.querySelector('.text__hashtags');
 
 var focusOrBlur = '';
