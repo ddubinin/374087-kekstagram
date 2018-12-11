@@ -189,11 +189,12 @@ var getEffectPicture = function (effect) {
   uploadImg.style = '';
   uploadImg.classList.add(effect); // навешиваем класс
 
-  if (uploadImg.classList == 'effects__preview--none') {
+  if (uploadImg.className === 'effects__preview--none') {
     effectBar.classList.add('hidden');
   } else {
     effectBar.classList.remove('hidden');
   }
+  console.log(uploadImg.className);
 };
 // хэштег
 var hashtagInput = document.querySelector('.text__hashtags');
@@ -277,31 +278,24 @@ var effectValues = {
 };
 
 var uploadPreviewImg = document.querySelector('.img-upload__preview img');
+
 var getEffectStyle = function (effectClass, proportion) {
   var effect = '';
-  switch (effectClass) {
-    case 'effects__preview--chrome':
-      effect = 'grayscale(' + proportion + ')';
-      break;
-    case 'effects__preview--sepia':
-      effect = 'sepia(' + proportion + ')';
-      break;
-    case 'effects__preview-marvin':
-      effect = 'invert(' + (proportion *  effectValues.MARVIN_MAX) + '%)';
-      break;
-    case 'effects__preview-phobos':
-      effect = 'blur(' + (proportion * effectValues.PHOBOS_MAX).toFixed(2) + 'px)';
-      break;
-    case 'effects__preview-heat':
-      effect = 'brightness(' + ((proportion * (effectValues.HEAT_MAX - effectValues.HEAT_MIN)) + effectValues.HEAT_MIN).toFixed(2) + ')';
-      break;
-    default: console.log(1);
-      break;
+
+  if (effectClass.className === 'effects__preview--chrome') {
+    effect = 'grayscale(' + proportion + ')';
+  } else if (effectClass.className === 'effects__preview--sepia') {
+    effect = 'sepia(' + proportion + ')';
+  } else if (effectClass.className === 'effects__preview--marvin') {
+    effect = 'invert(' + (proportion * effectValues.MARVIN_MAX) + '%)';
+  } else if (effectClass.className === 'effects__preview--phobos') {
+    effect = 'blur(' + (proportion * effectValues.PHOBOS_MAX).toFixed(2) + 'px)';
+  } else if (effectClass.className === 'effects__preview--heat') {
+    effect = 'brightness(' + ((proportion * (effectValues.HEAT_MAX - effectValues.HEAT_MIN)) + effectValues.HEAT_MIN).toFixed(2) + ')';
   }
   uploadPreviewImg.style.filter = effect;
-  // console.log(effect);
-  console.log(uploadPreviewImg.classList);
 };
+
 
 var effectLevelLine = document.querySelector('.effect-level__line'); // полоска вся
 var effectLevelPin = document.querySelector('.effect-level__pin'); // кружок
