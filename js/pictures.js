@@ -199,10 +199,8 @@ var getEffectPicture = function (effect) {
 var hashtagInput = document.querySelector('.text__hashtags');
 
 var focusOrBlur = '';
-
 hashtagInput.addEventListener('focus', function () {
   focusOrBlur = 'focus';
-
 });
 hashtagInput.addEventListener('blur', function () {
   focusOrBlur = 'blur';
@@ -269,59 +267,58 @@ var checkTagRepit = function (tags) {
 };
 
 
-
-
-
-
-
-
 // навешиваю стили в зависимости от класса
+var effectValues = {
+  HEAT_MAX: 3,
+  HEAT_MIN: 1,
+  PHOBOS_MAX: 3,
+  MARVIN_MAX: 100,
+  DEFAULT: 100
+};
 
-var uploadPreviewImg = document.querySelector('.img-upload__preview');
-var getEffectValue = function (effectClass, proportion) {
+var uploadPreviewImg = document.querySelector('.img-upload__preview img');
+var getEffectStyle = function (effectClass, proportion) {
   var effect = '';
   switch (effectClass) {
     case 'effects__preview--chrome':
-      effect = 'grayscale('+ proportion +')';
+      effect = 'grayscale(' + proportion + ')';
       break;
     case 'effects__preview--sepia':
-      effect = 'sepia('+ proportion +')';
+      effect = 'sepia(' + proportion + ')';
       break;
-    case 'marvin':
-      effect = 'invert(' + (proportion * 100) + '%)';
+    case 'effects__preview-marvin':
+      effect = 'invert(' + (proportion *  effectValues.MARVIN_MAX) + '%)';
       break;
-    case 'phobos':
-      effect = 'blur(' + (proportion * 3).toFixed(2) + 'px)';
+    case 'effects__preview-phobos':
+      effect = 'blur(' + (proportion * effectValues.PHOBOS_MAX).toFixed(2) + 'px)';
       break;
-    case 'heat':
-      effect = 'brightness(' + ((proportion * (3 - 1)) + 1).toFixed(2) + ')';
+    case 'effects__preview-heat':
+      effect = 'brightness(' + ((proportion * (effectValues.HEAT_MAX - effectValues.HEAT_MIN)) + effectValues.HEAT_MIN).toFixed(2) + ')';
       break;
-    default:
+    default: console.log(1);
       break;
-    }
-    uploadPreviewImg.style.filter = effect;
-  };
+  }
+  uploadPreviewImg.style.filter = effect;
+  // console.log(effect);
+  console.log(uploadPreviewImg.classList);
+};
 
-var uploadScale = document.querySelector('.effect-level');
-var effectPin = uploadScale.querySelector('effect-level__line'); // полоска вся
-var effectPinLevel = uploadScale.querySelector('.effect-level__pin'); // кружок
-var effectPinDepth = uploadScale.querySelector('.effect-level__depth'); // полоска закращенная
-var effectLevelInput = uploadScale.querySelector('.effect-level__value');
-var previewCassName = document.querySelector('.img-upload__preview img');
-console.log(previewCassName); // но почему-то нет класса
-// className надо чтобы калсс получить
+var effectLevelLine = document.querySelector('.effect-level__line'); // полоска вся
+var effectLevelPin = document.querySelector('.effect-level__pin'); // кружок
+var effectLevelDepth = document.querySelector('.effect-level__depth'); // полоска закращенная
+var effectLevelInput = document.querySelector('.effect-level__value');
 
 // ловлю координаты спина
-effectPinLevel.addEventListener('mousedown', function (evt) {
+effectLevelPin.addEventListener('mousedown', function (evt) {
   evt.preventDefault();
-// начальные координаты
+  // начальные координаты
   var startCoords = {
     x: evt.clientX
   };
 
   var onMouseMove = function (moveEvt) {
     moveEvt.preventDefault();
-// движение координат по нажатию мыши
+    // движение координат по нажатию мыши
     var shift = {
       x: startCoords.x - moveEvt.clientX
     };
@@ -331,20 +328,19 @@ effectPinLevel.addEventListener('mousedown', function (evt) {
     };
 
     var value;
-    // if (moveEvt.clientX > effectPin.getBoundingClientRect()) {
-    //   value = effectPin.offsetWidth  + 'px';
-    // } else if (moveEvt.clientX < effectPin.getBoundingClientRect()) {
-    //   value = '0px';
-    // } else {
-    //   value = (effectPinLevel.offsetLeft  - shift.x) + 'px';
-    // }
-    effectPinLevel.style.left = value;
-    effectPinDepth.style.width = value;
+    if (moveEvt.clientX > effectLevelLine.getBoundingClientRect().right) {
+      value = effectLevelDepth.offsetWidth + 'px';
+    } else if (moveEvt.clientX < effectLevelLine.getBoundingClientRect().left) {
+      value = '0px';
+    } else {
+      value = (effectLevelPin.offsetLeft - shift.x) + 'px';
+    }
+    effectLevelPin.style.left = value;
+    effectLevelDepth.style.width = value;
 
-    // var proportion = (effectPinLevel / effectPin).toFixed(2);
-    // effectLevelInput.value = proporton * 100;
-
-    // getEffectValue(previewCassName,proportion);
+    var proportion = (effectLevelPin.offsetLeft / effectLevelLine.offsetWidth).toFixed(2);
+    effectLevelInput.value = proportion * 100;
+    getEffectStyle(uploadPreviewImg, proportion);
 
   };
 
@@ -354,4 +350,33 @@ effectPinLevel.addEventListener('mousedown', function (evt) {
   };
   document.addEventListener('mousemove', onMouseMove);
   document.addEventListener('mouseup', onMouseUp);
+});
+
+// ресайз
+var resizeMinus = document.querySelector('.scale__control--smaller');
+var resizePlus = document.querySelector('.scale__control--bigger');
+var resizeInput = document.querySelector('.scale__control--value');
+var scale = {
+  MIN: 25,
+  MAX: 100,
+  DAFAULT: 100,
+  STEP: 25
+};
+
+var resizeImage = function (sign) {
+  var value = resizeInput.value;
+  value = parseInt(value, 10) + scale.STEP * sign;
+  if (value > scale.MAX) {
+    value = scale.MAX;
+  } else if (value < scale.MIN) {
+    value = scale.MIN;
+  }
+  uploadPreviewImg.style.transform = 'scale(' + (value / 100) + ')';
+  resizeInput.value = value + '%';
+};
+resizeMinus.addEventListener('click', function () {
+  resizeImage(-1);
+});
+resizePlus.addEventListener('click', function () {
+  resizeImage(1);
 });
