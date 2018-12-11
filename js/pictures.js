@@ -1,4 +1,10 @@
 'use strict';
+
+var effectLevelLine = document.querySelector('.effect-level__line'); // полоска вся
+var effectLevelPin = document.querySelector('.effect-level__pin'); // кружок
+var effectLevelDepth = document.querySelector('.effect-level__depth'); // полоска закрашенная
+var effectLevelInput = document.querySelector('.effect-level__value');
+
 var ESC_KEYCODE = 27;
 
 var bigPicture = document.querySelector('.big-picture');
@@ -180,6 +186,10 @@ effects.forEach(function (element) {
   element.addEventListener('click', function () {
     var allClassEffect = element.classList;
     getEffectPicture(allClassEffect[1]);
+
+    effectLevelPin.style.left = '100%';
+    effectLevelDepth.style.width = '100%';
+
   });
 });
 
@@ -295,11 +305,6 @@ var getEffectStyle = function (effectClass, proportion) {
   uploadPreviewImg.style.filter = effect;
 };
 
-
-var effectLevelLine = document.querySelector('.effect-level__line'); // полоска вся
-var effectLevelPin = document.querySelector('.effect-level__pin'); // кружок
-var effectLevelDepth = document.querySelector('.effect-level__depth'); // полоска закращенная
-var effectLevelInput = document.querySelector('.effect-level__value');
 
 // ловлю координаты спина
 effectLevelPin.addEventListener('mousedown', function (evt) {
