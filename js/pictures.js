@@ -194,7 +194,6 @@ var getEffectPicture = function (effect) {
   } else {
     effectBar.classList.remove('hidden');
   }
-  console.log(uploadImg.className);
 };
 // хэштег
 var hashtagInput = document.querySelector('.text__hashtags');
