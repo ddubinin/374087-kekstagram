@@ -1,4 +1,10 @@
 'use strict';
+
+var effectLevelLine = document.querySelector('.effect-level__line'); // полоска вся
+var effectLevelPin = document.querySelector('.effect-level__pin'); // кружок
+var effectLevelDepth = document.querySelector('.effect-level__depth'); // полоска закрашенная
+var effectLevelInput = document.querySelector('.effect-level__value');
+
 var ESC_KEYCODE = 27;
 
 var bigPicture = document.querySelector('.big-picture');
@@ -180,6 +186,10 @@ effects.forEach(function (element) {
   element.addEventListener('click', function () {
     var allClassEffect = element.classList;
     getEffectPicture(allClassEffect[1]);
+
+    effectLevelPin.style.left = '100%';
+    effectLevelDepth.style.width = '100%';
+
   });
 });
 
@@ -189,12 +199,59 @@ var getEffectPicture = function (effect) {
   uploadImg.style = '';
   uploadImg.classList.add(effect); // навешиваем класс
 
+<<<<<<< HEAD
   if (uploadImg.classList == 'effects__preview--none') {
+    effectBar.classList.add('hidden');
+  } else {
+    effectBar.classList.remove('hidden');
+=======
+  if (uploadImg.className === 'effects__preview--none') {
     effectBar.classList.add('hidden');
   } else {
     effectBar.classList.remove('hidden');
   }
 };
+// хэштег
+var hashtagInput = document.querySelector('.text__hashtags');
+
+var focusOrBlur = '';
+hashtagInput.addEventListener('focus', function () {
+  focusOrBlur = 'focus';
+});
+hashtagInput.addEventListener('blur', function () {
+  focusOrBlur = 'blur';
+});
+
+hashtagInput.addEventListener('change', function (e) {
+  var val = hashtagInput.value.trim();
+  var tags = val.split(' ').filter(function (tag) {
+    return tag !== '';
+  });
+  var validationResult = hashTagsValidate(tags);
+  e.target.setCustomValidity(validationResult);
+});
+
+
+// валидация всей строки
+var hashTagsValidate = function (tags) {
+  if (tags.length > 5) {
+    return 'Не должно превышать 5';
+  }
+  if (checkTagRepit(tags)) {
+    return 'не должны повторяться';
+>>>>>>> 5decee1e3a5e9826ab1578922d0bcc9c9d470a85
+  }
+
+  var result = tags.map(function (tag) {
+    return tagValidate(tag);
+  })
+    .filter(function (err) {
+      return err !== '';
+    });
+
+  return result.length === 0 ? '' : result[0];
+};
+<<<<<<< HEAD
 // хэштег
 var hashtagInput = document.querySelector('.text__hashtags');
 
@@ -234,6 +291,8 @@ var hashTagsValidate = function (tags) {
 
   return result.length === 0 ? '' : result[0];
 };
+=======
+>>>>>>> 5decee1e3a5e9826ab1578922d0bcc9c9d470a85
 
 // валидация отдельного тега
 var tagValidate = function (tag) {
@@ -277,6 +336,7 @@ var effectValues = {
 };
 
 var uploadPreviewImg = document.querySelector('.img-upload__preview img');
+<<<<<<< HEAD
 var getEffectStyle = function (effectClass, proportion) {
   var effect = '';
   switch (effectClass) {
@@ -307,6 +367,26 @@ var effectLevelLine = document.querySelector('.effect-level__line'); // поло
 var effectLevelPin = document.querySelector('.effect-level__pin'); // кружок
 var effectLevelDepth = document.querySelector('.effect-level__depth'); // полоска закращенная
 var effectLevelInput = document.querySelector('.effect-level__value');
+=======
+
+var getEffectStyle = function (effectClass, proportion) {
+  var effect = '';
+
+  if (effectClass.className === 'effects__preview--chrome') {
+    effect = 'grayscale(' + proportion + ')';
+  } else if (effectClass.className === 'effects__preview--sepia') {
+    effect = 'sepia(' + proportion + ')';
+  } else if (effectClass.className === 'effects__preview--marvin') {
+    effect = 'invert(' + (proportion * effectValues.MARVIN_MAX) + '%)';
+  } else if (effectClass.className === 'effects__preview--phobos') {
+    effect = 'blur(' + (proportion * effectValues.PHOBOS_MAX).toFixed(2) + 'px)';
+  } else if (effectClass.className === 'effects__preview--heat') {
+    effect = 'brightness(' + ((proportion * (effectValues.HEAT_MAX - effectValues.HEAT_MIN)) + effectValues.HEAT_MIN).toFixed(2) + ')';
+  }
+  uploadPreviewImg.style.filter = effect;
+};
+
+>>>>>>> 5decee1e3a5e9826ab1578922d0bcc9c9d470a85
 
 // ловлю координаты спина
 effectLevelPin.addEventListener('mousedown', function (evt) {
