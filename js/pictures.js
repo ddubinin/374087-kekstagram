@@ -199,12 +199,11 @@ var getEffectPicture = function (effect) {
   uploadImg.style = '';
   uploadImg.classList.add(effect); // навешиваем класс
 
-<<<<<<< HEAD
   if (uploadImg.classList == 'effects__preview--none') {
     effectBar.classList.add('hidden');
   } else {
     effectBar.classList.remove('hidden');
-=======
+  }
   if (uploadImg.className === 'effects__preview--none') {
     effectBar.classList.add('hidden');
   } else {
@@ -239,7 +238,6 @@ var hashTagsValidate = function (tags) {
   }
   if (checkTagRepit(tags)) {
     return 'не должны повторяться';
->>>>>>> 5decee1e3a5e9826ab1578922d0bcc9c9d470a85
   }
 
   var result = tags.map(function (tag) {
@@ -251,7 +249,6 @@ var hashTagsValidate = function (tags) {
 
   return result.length === 0 ? '' : result[0];
 };
-<<<<<<< HEAD
 // хэштег
 var hashtagInput = document.querySelector('.text__hashtags');
 
@@ -291,8 +288,6 @@ var hashTagsValidate = function (tags) {
 
   return result.length === 0 ? '' : result[0];
 };
-=======
->>>>>>> 5decee1e3a5e9826ab1578922d0bcc9c9d470a85
 
 // валидация отдельного тега
 var tagValidate = function (tag) {
@@ -336,7 +331,6 @@ var effectValues = {
 };
 
 var uploadPreviewImg = document.querySelector('.img-upload__preview img');
-<<<<<<< HEAD
 var getEffectStyle = function (effectClass, proportion) {
   var effect = '';
   switch (effectClass) {
@@ -367,7 +361,6 @@ var effectLevelLine = document.querySelector('.effect-level__line'); // поло
 var effectLevelPin = document.querySelector('.effect-level__pin'); // кружок
 var effectLevelDepth = document.querySelector('.effect-level__depth'); // полоска закращенная
 var effectLevelInput = document.querySelector('.effect-level__value');
-=======
 
 var getEffectStyle = function (effectClass, proportion) {
   var effect = '';
@@ -386,7 +379,6 @@ var getEffectStyle = function (effectClass, proportion) {
   uploadPreviewImg.style.filter = effect;
 };
 
->>>>>>> 5decee1e3a5e9826ab1578922d0bcc9c9d470a85
 
 // ловлю координаты спина
 effectLevelPin.addEventListener('mousedown', function (evt) {
