@@ -19,7 +19,7 @@
     var tags = val.split(' ').filter(function (tag) {
       return tag !== '';
     });
-    var validationResult = window.form.hashTagsValidate(tags);
+    var validationResult = hashTagsValidate(tags);
     e.target.setCustomValidity(validationResult);
   });
 
@@ -73,7 +73,6 @@
     return validationError;
   };
 
-  // загрзузка своей картинки
   var uploadFormEscClose = function (evt) {
     if (evt.keyCode === window.preview.ESC_KEYCODE && focusOrBlur !== 'focus') {
       uploadInput.value = '';
@@ -96,8 +95,4 @@
   };
 
   uploadInput.addEventListener('change', uploadOpen);
-
-    window.form = {
-      // хз
-  };
 })();

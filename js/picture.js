@@ -1,6 +1,6 @@
 'use strict';
 (function () {
-  var picture = [];
+  var pictures = [];
   var generatePicture = function (i) {
     return {
       url: 'photos/' + (i + 1) + '.jpg',
@@ -13,14 +13,13 @@
   var getPictures = function (pictureNum) {
     // var picture = [];
     for (var i = 0; i < pictureNum; i++) {
-      picture.push(generatePicture(i));
+      pictures.push(generatePicture(i));
     }
-    return picture;
+    return pictures;
   };
 
-    window.picture = {
-    picture: picture,
+  window.picture = {
+    pictures: pictures,
     getPictures: getPictures,
-    // createCardPicture: createCardPicture
   };
 })();

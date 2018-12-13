@@ -19,5 +19,5 @@
     window.preview.pictureListElement.appendChild(fragment);
   };
 
-    renderPictures();
+  renderPictures();
 })();
