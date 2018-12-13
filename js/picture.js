@@ -11,23 +11,24 @@
   };
 
   var getPictures = function (pictureNum) {
-
+    // var picture = [];
     for (var i = 0; i < pictureNum; i++) {
       picture.push(generatePicture(i));
     }
     return picture;
   };
 
-  var createCardPicture = function (picture) {
+  var createCardPicture = function (image) {
     var picturetElement = window.preview.pictureCardTemple.cloneNode(true); // клонирую .picture в #picture
-    picturetElement.querySelector('.picture__img').src = picture.url; // ищу .picture__img и дабавляю src
-    picturetElement.querySelector('.picture__likes').textContent = picture.likes; // ищу .picture__likes прописываю лайки
+    picturetElement.querySelector('.picture__img').src = image.url; // ищу .picture__img и дабавляю src
+    picturetElement.querySelector('.picture__likes').textContent = image.likes; // ищу .picture__likes прописываю лайки
     picturetElement.querySelector('.picture__comments').textContent = window.data.COMMENTS.length; // ищу .picture__comments и прописываю комменты
     picturetElement.addEventListener('click', function () {
-      window.preview.renderBigPicture(picture);
+      window.preview.renderBigPicture(image);
     });
     return picturetElement;
   };
+
   var renderPictures = function () {
     var fragment = document.createDocumentFragment();
     window.data.PHOTOS = getPictures(25);
@@ -38,7 +39,8 @@
   };
 
   window.picture = {
-    renderPictures: renderPictures
+    renderPictures: renderPictures,
+    picture: picture
   };
 
   renderPictures();

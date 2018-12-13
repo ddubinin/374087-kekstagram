@@ -14,13 +14,13 @@
 
   var bigPicture = document.querySelector('.big-picture');
 
-  var pictureListElement = document.querySelector('.pictures'); // ищу элемент с .pictures
-  var pictureCardTemple = document.querySelector('#picture'); // в .picture нем ищу #picture
-  console.log(pictureCardTemple);
+  var pictureListElement = document.querySelector('.pictures'); // ищу элемент с .pictures // нигде почему-то дальше не юзается
+  var pictureCardTemple = document.querySelector('#picture')
+    .content
+    .querySelector('.picture'); // в #picture нем ищу .picture
   var commentsTemplate = bigPicture.querySelector('.social__comment');
   var uploadPreviewImg = document.querySelector('.img-upload__preview img');
   var socialCommentCount = document.querySelector('.social__comment-count');
-
   socialCommentCount.classList.add('visually-hidden');
 
   var commentsLoader = document.querySelector('.comments-loader');
@@ -99,8 +99,8 @@
       commentsFragment.appendChild(commentElement);
     });
 
-    bigPicture.querySelector('.big-picture__img img').src = picture.url;
-    bigPicture.querySelector('.likes-count').textContent = picture.likes;
+    bigPicture.querySelector('.big-picture__img img').src = window.picture.picture.url;
+    bigPicture.querySelector('.likes-count').textContent = window.picture.picture.likes;
     bigPicture.querySelector('.comments-count').textContent = window.data.COMMENTS.length;
     bigPicture.querySelector('.social__comments').innerHTML = '';
     bigPicture.querySelector('.social__comments').appendChild(commentsFragment);
@@ -194,6 +194,7 @@
   });
 
   window.preview = {
+    pictureListElement:pictureListElement,
     pictureCardTemple: pictureCardTemple,
     renderBigPicture: renderBigPicture,
     ESC_KEYCODE: ESC_KEYCODE
