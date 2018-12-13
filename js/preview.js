@@ -188,7 +188,7 @@
   });
   // закрытие на ESC
   document.addEventListener('keydown', function (evt) {
-    if (evt.keyCode === window.ESC_KEYCODE) {
+    if (evt.keyCode === ESC_KEYCODE) {
       getCloseBigPicture();
     }
   });
