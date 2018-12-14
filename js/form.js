@@ -95,4 +95,35 @@
   };
 
   uploadInput.addEventListener('change', uploadOpen);
+
+
+
+
+
+
+
+
+  var form = document.querySelector('.img-upload__form');
+    form.addEventListener('submit', function (evt) {
+    window.backend.upload(new FormData(form), function (response) {
+      uploadFormClose();
+    });
+    evt.preventDefault();
+  });
+
+  var errorTempalte = document.querySelector('#error')
+  .content
+  .querySelector('.error');
+  var errorListElement = document.querySelector('.main');
+
+  var createErrorMsg = function () {
+    var errorElement = errorTempalte.cloneNode(true);
+    errorElement.querySelector('.error__title');
+  };
+
+  var errorMsg = function () {
+    var fragment = document.createDocumentFragment();
+    errorListElement.appendChild(fragment).textContent = 'Ошибка загрузки файла';
+    console.log(fragment);
+  };
 })();
