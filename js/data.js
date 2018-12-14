@@ -1,6 +1,7 @@
 'use strict';
 (function () {
-// создаю массив комментов
+  var ESC_KEYCODE = 27;
+  // создаю массив комментов
   var COMMENTS = [
     'Всё отлично!',
     'В целом всё неплохо. Но не всё.',
@@ -23,7 +24,8 @@
   window.data = {
     COMMENTS: COMMENTS,
     DESCRIPTION: DESCRIPTIONS,
-    PHOTOS: PHOTOS
+    PHOTOS: PHOTOS,
+    ESC_KEYCODE: ESC_KEYCODE
   };
 })();
 

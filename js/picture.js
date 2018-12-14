@@ -1,6 +1,7 @@
 'use strict';
 (function () {
-  var pictures = [];
+  // @oldfox window.data.PHOTOS
+  // var pictures = [];
   var generatePicture = function (i) {
     return {
       url: 'photos/' + (i + 1) + '.jpg',
@@ -11,7 +12,7 @@
   };
 
   var getPictures = function (pictureNum) {
-    // var picture = [];
+    var pictures = [];
     for (var i = 0; i < pictureNum; i++) {
       pictures.push(generatePicture(i));
     }
@@ -19,7 +20,8 @@
   };
 
   window.picture = {
-    pictures: pictures,
+    // @oldfox window.data.PHOTOS
+    // pictures: pictures,
     getPictures: getPictures,
   };
 })();

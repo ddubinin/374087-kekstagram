@@ -74,7 +74,7 @@
   };
 
   var uploadFormEscClose = function (evt) {
-    if (evt.keyCode === window.preview.ESC_KEYCODE && focusOrBlur !== 'focus') {
+    if (evt.keyCode === window.data.ESC_KEYCODE && focusOrBlur !== 'focus') {
       uploadInput.value = '';
       uploadFormClose();
     }
