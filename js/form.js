@@ -108,16 +108,16 @@
     var successButton = successElement.querySelector('button');
     successButton.addEventListener('click', function (evt) {
       evt.preventDefault();
-      closeErrorMsg(successElement);
+      closeSuccessMsg(successElement);
     });
-    successElement.addEventListener('click', function (){
-      closeErrorMsg(successElement);
-      });
+    successElement.addEventListener('click', function () {
+      closeSuccessMsg(successElement);
+    });
     document.addEventListener('keydown', function (evt) {
-    if (evt.keyCode === window.data.ESC_KEYCODE) {
-      closeErrorMsg(successElement);
-    };
-  });
+      if (evt.keyCode === window.data.ESC_KEYCODE) {
+        closeSuccessMsg(successElement);
+      }
+    });
     return successElement;
   };
   var successMsg = function () {
@@ -137,13 +137,13 @@
       evt.preventDefault();
       closeErrorMsg(errorElement);
     });
-    errorElement.addEventListener('click', function (){
+    errorElement.addEventListener('click', function () {
       closeErrorMsg(errorElement);
     });
     document.addEventListener('keydown', function (evt) {
-    if (evt.keyCode === window.data.ESC_KEYCODE) {
-      closeErrorMsg(errorElement);
-      };
+      if (evt.keyCode === window.data.ESC_KEYCODE) {
+        closeErrorMsg(errorElement);
+      }
     });
     return errorElement;
   };
