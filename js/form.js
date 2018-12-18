@@ -108,8 +108,16 @@
     var successButton = successElement.querySelector('button');
     successButton.addEventListener('click', function (evt) {
       evt.preventDefault();
-      successElement.style.display = 'none';
+      closeErrorMsg(successElement);
     });
+    successElement.addEventListener('click', function (){
+      closeErrorMsg(successElement);
+      });
+    document.addEventListener('keydown', function (evt) {
+    if (evt.keyCode === window.data.ESC_KEYCODE) {
+      closeErrorMsg(successElement);
+    };
+  });
     return successElement;
   };
   var successMsg = function () {
@@ -125,14 +133,26 @@
       window.backend.upload(new FormData(form), onLoad, onError);
       errorElement.style.display = 'none';
     });
-
     buttons[1].addEventListener('click', function (evt) {
       evt.preventDefault();
-      errorElement.style.display = 'none';
+      closeErrorMsg(errorElement);
+    });
+    errorElement.addEventListener('click', function (){
+      closeErrorMsg(errorElement);
+    });
+    document.addEventListener('keydown', function (evt) {
+    if (evt.keyCode === window.data.ESC_KEYCODE) {
+      closeErrorMsg(errorElement);
+      };
     });
     return errorElement;
   };
-
+  var closeSuccessMsg = function (successElement) {
+    successElement.style.display = 'none';
+  };
+  var closeErrorMsg = function (errorElement) {
+    errorElement.style.display = 'none';
+  };
   var errorMsg = function () {
     var fragment = document.createDocumentFragment();
     main.appendChild(createErrorMsg(fragment));
