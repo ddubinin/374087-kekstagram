@@ -1,7 +1,7 @@
 'use strict';
 (function () {
-  var URL_GET = 'https://js.dump.academy/kekstagram/data1';
-  var URL_POST = 'https://js.dump.academy/kekstagram1';
+  var URL_GET = 'https://js.dump.academy/kekstagram/data';
+  var URL_POST = 'https://js.dump.academy/kekstagram';
   var ERROR_SERVER = 500;
   var ERROR_BAD_REQUEST = 400;
   var ERROR_NOT_FOUND = 404;
@@ -9,7 +9,7 @@
   var TIMEOUT = 10000;
 
 
-    var setupRequest = function (onLoad, onError) {
+  var setupRequest = function (onLoad, onError) {
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
 
@@ -21,7 +21,7 @@
         case ERROR_BAD_REQUEST:
           onError('Запрос неверный');
           break;
-        case ERROR_SERVER: 
+        case ERROR_SERVER:
           onError('Попробуйте еще раз позже');
           break;
         case ERROR_NOT_FOUND:
@@ -51,9 +51,8 @@
     xhr.send();
   };
 
-  var upload = function (data, onLoad, onError, onUploading) {
+  var upload = function (data, onLoad, onError) {
     var xhr = setupRequest(onLoad, onError);
-    xhr.upload.addEventListener('progress', onUploading);
     xhr.open('POST', URL_POST);
     xhr.send(data);
   };

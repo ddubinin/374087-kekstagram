@@ -4,7 +4,14 @@
   var hashtagInput = document.querySelector('.text__hashtags');
   var uploadInput = document.querySelector('#upload-file');
   var uploadForm = document.querySelector('.img-upload__overlay');
-
+  var main = document.querySelector('main');
+  var successTemplate = document.querySelector('#success')
+    .content
+    .querySelector('.success');
+  var errorTempalte = document.querySelector('#error')
+      .content
+      .querySelector('.error');
+  var form = document.querySelector('.img-upload__form');
   var focusOrBlur = '';
 
   hashtagInput.addEventListener('focus', function () {
@@ -96,34 +103,54 @@
 
   uploadInput.addEventListener('change', uploadOpen);
 
-
-
-
-
-
-
-
-  var form = document.querySelector('.img-upload__form');
-    form.addEventListener('submit', function (evt) {
-    window.backend.upload(new FormData(form), function (response) {
-      uploadFormClose();
+  var createSuccesMsg = function () {
+    var successElement = successTemplate.cloneNode(true);
+    var successButton = successElement.querySelector('button');
+    successButton.addEventListener('click', function (evt) {
+      evt.preventDefault();
+      successElement.style.display = 'none';
     });
-    evt.preventDefault();
-  });
-
-  var errorTempalte = document.querySelector('#error')
-  .content
-  .querySelector('.error');
-  var errorListElement = document.querySelector('.main');
+    return successElement;
+  };
+  var successMsg = function () {
+    var fragment = document.createDocumentFragment();
+    main.appendChild(createSuccesMsg(fragment));
+  };
 
   var createErrorMsg = function () {
     var errorElement = errorTempalte.cloneNode(true);
-    errorElement.querySelector('.error__title');
+    var buttons = errorElement.querySelectorAll('.error__button');
+    buttons[0].addEventListener('click', function (evt) {
+      evt.preventDefault();
+      window.backend.upload(new FormData(form), onLoad, onError);
+      errorElement.style.display = 'none';
+    });
+
+    buttons[1].addEventListener('click', function (evt) {
+      evt.preventDefault();
+      errorElement.style.display = 'none';
+    });
+    return errorElement;
   };
 
   var errorMsg = function () {
     var fragment = document.createDocumentFragment();
-    errorListElement.appendChild(fragment).textContent = 'Ошибка загрузки файла';
-    console.log(fragment);
+    main.appendChild(createErrorMsg(fragment));
   };
+
+  var onLoad = function () {
+    uploadFormClose();
+    successMsg();
+  };
+
+  var onError = function () {
+    uploadFormClose();
+    errorMsg();
+  };
+
+  form.addEventListener('submit', function (evt) {
+    evt.preventDefault();
+    window.backend.upload(new FormData(form), onLoad, onError);
+  });
+
 })();
