@@ -1,5 +1,7 @@
 'use strict';
 (function () {
+  // @oldfox window.data.PHOTOS
+  // var pictures = [];
   var generatePicture = function (i) {
     return {
       url: 'photos/' + (i + 1) + '.jpg',
@@ -18,6 +20,8 @@
   };
 
   window.picture = {
+    // @oldfox window.data.PHOTOS
+    // pictures: pictures,
     getPictures: getPictures,
   };
 })();
