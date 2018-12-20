@@ -15,9 +15,6 @@
   var commentsTemplate = bigPicture.querySelector('.social__comment');
   var bigPictureCancel = document.querySelector('.big-picture__cancel');
 
-  // var socialCommentCount = bigPicture.querySelector('.social__comment-count');
-  // socialCommentCount.classList.add('visually-hidden');
-
   var commentsLoader = bigPicture.querySelector('.comments-loader');
 
   var step = 0;

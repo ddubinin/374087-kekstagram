@@ -8,7 +8,6 @@
   var SUCCESS = 200;
   var TIMEOUT = 10000;
 
-
   var setupRequest = function (onLoad, onError) {
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
