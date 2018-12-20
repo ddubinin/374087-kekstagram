@@ -49,7 +49,7 @@
     createErrorMsg(errorMsg);
   };
 
-var toggleClass = function ( element, className ) {
+  var toggleClass = function (element, className) {
     imgFiltresBtns.forEach(function (button) {
       button.classList.remove(className);
     });
