@@ -3,6 +3,9 @@
   var NEW_POSTS_COUNT = 10;
   var imgFiltres = document.querySelector('.img-filters');
   imgFiltres.classList.remove('img-filters--inactive');
+  var imgFiltresBtns = document.querySelectorAll('.img-filters__button');
+  var imgFiltresBtnActive = 'img-filters__button--active';
+
   var filterPopularButton = document.querySelector('#filter-popular');
   var filterNewButton = document.querySelector('#filter-new');
   var filterDiscussedButton = document.querySelector('#filter-discussed');
@@ -46,18 +49,28 @@
     createErrorMsg(errorMsg);
   };
 
+var toggleClass = function ( element, className ) {
+    imgFiltresBtns.forEach(function (button) {
+      button.classList.remove(className);
+    });
+    element.classList.add(className);
+  };
+
   window.backend.download(onSuccess, onError);
 
   filterPopularButton.addEventListener('click', function (e) {
     getFiltres(e.target);
+    toggleClass(filterPopularButton, imgFiltresBtnActive);
   });
 
   filterNewButton.addEventListener('click', function (e) {
     getFiltres(e.target);
+    toggleClass(filterNewButton, imgFiltresBtnActive);
   });
 
   filterDiscussedButton.addEventListener('click', function (e) {
     getFiltres(e.target);
+    toggleClass(filterDiscussedButton, imgFiltresBtnActive);
   });
 
   var getFiltres = function (item) {
