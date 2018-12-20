@@ -2,6 +2,7 @@
 (function () {
   // хэштег
   var hashtagInput = document.querySelector('.text__hashtags');
+  var textarea = document.querySelector('.text__description');
   var uploadInput = document.querySelector('#upload-file');
   var uploadForm = document.querySelector('.img-upload__overlay');
   var uploadFormEsc = uploadForm.querySelector('.img-upload__cancel');
@@ -18,6 +19,13 @@
   hashtagInput.addEventListener('blur', function () {
     focusOrBlur = false;
   });
+
+  textarea.addEventListener('change', function (e) {
+    var textValue = textarea.value;
+    var validationResult = window.validate.descriptionValidate(textValue);
+    e.target.setCustomValidity(validationResult);
+  });
+  
 
   hashtagInput.addEventListener('change', function (e) {
     var val = hashtagInput.value.trim();
@@ -39,6 +47,7 @@
   var uploadFormClose = function () {
     uploadForm.classList.add('hidden');
     uploadInput.value = '';
+    textarea.value = '';
     document.removeEventListener('keydown', uploadFormEscClose);
     uploadFormEsc.removeEventListener('click', uploadFormClose);
   };

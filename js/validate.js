@@ -3,6 +3,16 @@
 
   var TAG_MAXIMUM = 5;
   var TAG_MAX_LENGTH = 20;
+  var TEXT_MAX_LENGTH = 140;
+
+  var descriptionValidate = function (symbols) {
+    if (symbols.length > TEXT_MAX_LENGTH) {
+      return 'Не должно превышать 140';
+    } else {
+      return '';
+    }
+  };
+
   var hashTagsValidate = function (tags) {
     if (tags.length > TAG_MAXIMUM) {
       return 'Не должно превышать 5';
@@ -16,8 +26,8 @@
     }).filter(function (err) {
       return err !== '';
     });
-
     return result.length === 0 ? '' : result[0];
+
   };
 
   var tagValidate = function (tag) {
@@ -52,6 +62,7 @@
   };
 
   window.validate = {
-    hashTagsValidate: hashTagsValidate
+    hashTagsValidate: hashTagsValidate,
+    descriptionValidate: descriptionValidate
   };
 })();
