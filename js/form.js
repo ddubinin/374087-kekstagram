@@ -9,7 +9,7 @@
   var successTemplate = document.querySelector('#success').content.querySelector('.success');
   var errorTempalte = document.querySelector('#error').content.querySelector('.error');
   var form = document.querySelector('.img-upload__form');
-  var imgUploadEffectLevel = document.querySelector(".img-upload__effect-level");
+  var imgUploadEffectLevel = document.querySelector('.img-upload__effect-level');
   var focusOrBlur = false;
 
   hashtagInput.addEventListener('focus', function () {
@@ -25,11 +25,10 @@
       return tag !== '';
     });
     var validationResult = window.validate.hashTagsValidate(tags);
-    console.log(validationResult);
     e.target.setCustomValidity(validationResult);
   });
 
-  
+
   var uploadFormEscClose = function (evt) {
     if (evt.keyCode === window.data.ESC_KEYCODE && !focusOrBlur) {
       uploadInput.value = '';
@@ -41,13 +40,13 @@
     uploadForm.classList.add('hidden');
     uploadInput.value = '';
     document.removeEventListener('keydown', uploadFormEscClose);
-    uploadFormEsc.removeEventListener("click", uploadFormClose);
+    uploadFormEsc.removeEventListener('click', uploadFormClose);
   };
 
   var uploadFormOpen = function () {
     uploadForm.classList.remove('hidden');
-    imgUploadEffectLevel.classList.add("visually-hidden");
-    uploadFormEsc.addEventListener("click", uploadFormClose);
+    imgUploadEffectLevel.classList.add('visually-hidden');
+    uploadFormEsc.addEventListener('click', uploadFormClose);
     document.addEventListener('keydown', uploadFormEscClose);
   };
 
@@ -80,7 +79,7 @@
     var buttons = errorElement.querySelectorAll('.error__button');
     buttons[0].addEventListener('click', function (evt) {
       evt.preventDefault();
-      window.backend.upload(new FormData(form), onLoad, onError);
+      window.backend.upload(new FormData(form), onSuccess, onError);
       errorElement.style.display = 'none';
     });
     buttons[1].addEventListener('click', function (evt) {
@@ -108,7 +107,7 @@
     main.appendChild(createErrorMsg(fragment));
   };
 
-  var onSuccess = function() {
+  var onSuccess = function () {
     uploadFormClose();
     successMsg();
   };

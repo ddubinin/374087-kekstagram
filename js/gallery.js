@@ -28,8 +28,15 @@
     renderPictures(window.data.PHOTOS.slice(0));
   };
 
+  var createErrorMsg = function (errorMsg) {
+    var main = document.querySelector('main');
+    var newDiv = document.createElement('div');
+    newDiv.innerHTML = '<p style="text-align:center">' + errorMsg + '</p>';
+    main.appendChild(newDiv);
+  };
+
   var onError = function (errorMsg) {
-    console.log(errorMsg);
+    createErrorMsg(errorMsg);
   };
 
   window.backend.download(onSuccess, onError);

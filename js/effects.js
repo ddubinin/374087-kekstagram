@@ -1,6 +1,6 @@
-"use strict";
-(function() {
-  var PIN_LEFT_MAX = "453px";
+'use strict';
+(function () {
+  var PIN_LEFT_MAX = '453px';
   var PERCENT_MAX = 100;
   var WIDTH_SLIDER = 453;
   var FILTER_BLUR_MAX = 3;
@@ -22,15 +22,15 @@
     heat: 'brightness(3)',
     none: 'none'
   };
-    var scale = {
+  var scale = {
     MIN: 25,
     MAX: 100,
     DAFAULT: 100,
     STEP: 25
   };
-  var resizeMinus = document.querySelector(".scale__control--smaller"); // минус
-  var resizePlus = document.querySelector(".scale__control--bigger"); // плюс
-  var resizeInput = document.querySelector(".scale__control--value"); // инпут для ресайза
+  var resizeMinus = document.querySelector('.scale__control--smaller'); // минус
+  var resizePlus = document.querySelector('.scale__control--bigger'); // плюс
+  var resizeInput = document.querySelector('.scale__control--value'); // инпут для ресайза
 
   var setNoneFilter = function () {
     if (imgUploadPreview.className !== '') {
@@ -126,14 +126,14 @@
     } else if (value < scale.MIN) {
       value = scale.MIN;
     }
-    imgUploadPreview.style.transform = "scale(" + value / 100 + ")";
-    resizeInput.value = value + "%";
+    imgUploadPreview.style.transform = 'scale(' + value / 100 + ')';
+    resizeInput.value = value + '%';
   };
 
-  resizeMinus.addEventListener("click", function () {
+  resizeMinus.addEventListener('click', function () {
     resizeImage(-1);
   });
-  resizePlus.addEventListener("click", function () {
+  resizePlus.addEventListener('click', function () {
     resizeImage(1);
   });
 
