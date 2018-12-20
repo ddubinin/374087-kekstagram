@@ -1,7 +1,7 @@
 'use strict';
 (function () {
   // функция рандомного числа по мин и максу
-  var getRandomNum = function (min, max) {
+  var getRandomNum = function (max, min) {
     return Math.floor(Math.random() * (max - min)) + min;
   };
 
