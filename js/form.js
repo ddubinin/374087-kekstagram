@@ -4,21 +4,19 @@
   var hashtagInput = document.querySelector('.text__hashtags');
   var uploadInput = document.querySelector('#upload-file');
   var uploadForm = document.querySelector('.img-upload__overlay');
+  var uploadFormEsc = uploadForm.querySelector('.img-upload__cancel');
   var main = document.querySelector('main');
-  var successTemplate = document.querySelector('#success')
-    .content
-    .querySelector('.success');
-  var errorTempalte = document.querySelector('#error')
-      .content
-      .querySelector('.error');
+  var successTemplate = document.querySelector('#success').content.querySelector('.success');
+  var errorTempalte = document.querySelector('#error').content.querySelector('.error');
   var form = document.querySelector('.img-upload__form');
-  var focusOrBlur = '';
+  var imgUploadEffectLevel = document.querySelector('.img-upload__effect-level');
+  var focusOrBlur = false;
 
   hashtagInput.addEventListener('focus', function () {
-    focusOrBlur = 'focus';
+    focusOrBlur = true;
   });
   hashtagInput.addEventListener('blur', function () {
-    focusOrBlur = 'blur';
+    focusOrBlur = false;
   });
 
   hashtagInput.addEventListener('change', function (e) {
@@ -26,62 +24,13 @@
     var tags = val.split(' ').filter(function (tag) {
       return tag !== '';
     });
-    var validationResult = hashTagsValidate(tags);
+    var validationResult = window.validate.hashTagsValidate(tags);
     e.target.setCustomValidity(validationResult);
   });
 
-  // валидация всей строки
-  var hashTagsValidate = function (tags) {
-    if (tags.length > 5) {
-      return 'Не должно превышать 5';
-    }
-    if (checkTagRepit(tags)) {
-      return 'не должны повторяться';
-    }
-
-    var result = tags.map(function (tag) {
-      return tagValidate(tag);
-    })
-      .filter(function (err) {
-        return err !== '';
-      });
-
-    return result.length === 0 ? '' : result[0];
-  };
-
-  // валидация отдельного тега
-  var tagValidate = function (tag) {
-    tag = tag.toUpperCase();
-    var fl = tag.slice(0, 1);
-    if (fl !== '#') {
-      return 'должен начинаться с #';
-    }
-    if (tag.length > 20) {
-      return 'не должно быть символов больше 20';
-    }
-
-    tag = tag.slice(1);
-    if (/#/.test(tag)) {
-      return 'должны разделяться пробелами';
-    }
-    return '';
-  };
-
-  var checkTagRepit = function (tags) {
-    var tagsMap = {};
-    var validationError = false;
-    tags.forEach(function (tag) {
-      if (tagsMap.hasOwnProperty(tag)) {
-        validationError = true;
-      } else {
-        tagsMap[tag] = true;
-      }
-    });
-    return validationError;
-  };
 
   var uploadFormEscClose = function (evt) {
-    if (evt.keyCode === window.data.ESC_KEYCODE && focusOrBlur !== 'focus') {
+    if (evt.keyCode === window.data.ESC_KEYCODE && !focusOrBlur) {
       uploadInput.value = '';
       uploadFormClose();
     }
@@ -91,17 +40,17 @@
     uploadForm.classList.add('hidden');
     uploadInput.value = '';
     document.removeEventListener('keydown', uploadFormEscClose);
+    uploadFormEsc.removeEventListener('click', uploadFormClose);
   };
 
-  var uploadOpen = function () {
+  var uploadFormOpen = function () {
     uploadForm.classList.remove('hidden');
-    uploadForm
-          .querySelector('.img-upload__cancel')
-          .addEventListener('click', uploadFormClose);
+    imgUploadEffectLevel.classList.add('visually-hidden');
+    uploadFormEsc.addEventListener('click', uploadFormClose);
     document.addEventListener('keydown', uploadFormEscClose);
   };
 
-  uploadInput.addEventListener('change', uploadOpen);
+  uploadInput.addEventListener('change', uploadFormOpen);
 
   var createSuccesMsg = function () {
     var successElement = successTemplate.cloneNode(true);
@@ -130,7 +79,7 @@
     var buttons = errorElement.querySelectorAll('.error__button');
     buttons[0].addEventListener('click', function (evt) {
       evt.preventDefault();
-      window.backend.upload(new FormData(form), onLoad, onError);
+      window.backend.upload(new FormData(form), onSuccess, onError);
       errorElement.style.display = 'none';
     });
     buttons[1].addEventListener('click', function (evt) {
@@ -158,7 +107,7 @@
     main.appendChild(createErrorMsg(fragment));
   };
 
-  var onLoad = function () {
+  var onSuccess = function () {
     uploadFormClose();
     successMsg();
   };
@@ -170,7 +119,7 @@
 
   form.addEventListener('submit', function (evt) {
     evt.preventDefault();
-    window.backend.upload(new FormData(form), onLoad, onError);
+    window.backend.upload(new FormData(form), onSuccess, onError);
   });
 
 })();
