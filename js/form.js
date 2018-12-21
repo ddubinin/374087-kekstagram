@@ -28,7 +28,6 @@
     e.target.setCustomValidity(validationResult);
   });
 
-
   var uploadFormEscClose = function (evt) {
     if (evt.keyCode === window.data.ESC_KEYCODE && !focusOrBlur) {
       uploadInput.value = '';

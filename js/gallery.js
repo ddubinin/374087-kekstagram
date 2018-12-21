@@ -1,9 +1,19 @@
 'use strict';
 (function () {
-
+  var NEW_POSTS_COUNT = 10;
+  var imgFiltres = document.querySelector('.img-filters');
+  var imgFiltresBtns = document.querySelectorAll('.img-filters__button');
+  var imgFiltresBtnActive = 'img-filters__button--active';
+  var filterPopularButton = document.querySelector('#filter-popular');
+  var filterNewButton = document.querySelector('#filter-new');
+  var filterDiscussedButton = document.querySelector('#filter-discussed');
   var pictureListElement = document.querySelector('.pictures');
   var pictureCardTemple = document.querySelector('#picture').content.querySelector('.picture');
   var fragment = document.createDocumentFragment();
+
+  var openFilrtresBtn = function () {
+    imgFiltres.classList.remove('img-filters--inactive');
+  };
 
   var createCardPicture = function (image) {
     var pictureElement = pictureCardTemple.cloneNode(true);
@@ -21,6 +31,7 @@
       fragment.appendChild(createCardPicture(pic));
     });
     pictureListElement.appendChild(fragment);
+    openFilrtresBtn();
   };
 
   var onSuccess = function (data) {
@@ -39,27 +50,32 @@
     createErrorMsg(errorMsg);
   };
 
-  window.backend.download(onSuccess, onError);
-
-
-  var NEW_POSTS_COUNT = 10;
-  var imgFiltres = document.querySelector('.img-filters');
-  imgFiltres.classList.remove('img-filters--inactive');
-  var imgFiltresBtns = document.querySelectorAll('.img-filters__button');
-  var imgFiltresBtnActive = 'img-filters__button--active';
-
-
-  var toggleClass = function (element, allElements, className) {
-    allElements.forEach(function (button) {
+  var toggleClass = function (element, className) {
+    imgFiltresBtns.forEach(function (button) {
       button.classList.remove(className);
     });
     element.classList.add(className);
   };
 
+  window.backend.download(onSuccess, onError);
+
+  filterPopularButton.addEventListener('click', function (e) {
+    getFiltres(e.target);
+    toggleClass(filterPopularButton, imgFiltresBtnActive);
+  });
+
+  filterNewButton.addEventListener('click', function (e) {
+    getFiltres(e.target);
+    toggleClass(filterNewButton, imgFiltresBtnActive);
+  });
+
+  filterDiscussedButton.addEventListener('click', function (e) {
+    getFiltres(e.target);
+    toggleClass(filterDiscussedButton, imgFiltresBtnActive);
+  });
+
   var getFiltres = function (item) {
-    if (item.tagName === 'BUTTON') {
-      toggleClass(item, imgFiltresBtns, imgFiltresBtnActive);
-    }
+
     cleanCardPicture();
 
     if (item.id === 'filter-popular') {
@@ -70,11 +86,7 @@
       renderPictures(sortByComments(window.data.PHOTOS));
     }
   };
-  imgFiltresBtns.forEach(function (item) {
-    item.addEventListener('click', function () {
-      getFiltres(item);
-    });
-  });
+
   // чистит фотки
   var cleanCardPicture = function () {
     var posts = document.querySelectorAll('.picture');
@@ -100,4 +112,5 @@
       return 0.5 - Math.random();
     });
   };
+
 })();

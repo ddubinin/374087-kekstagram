@@ -116,7 +116,6 @@
     document.addEventListener('mouseup', onMouseUp);
   });
 
-
   // ресайз
   var resizeImage = function (sign) {
     var value = resizeInput.value;
