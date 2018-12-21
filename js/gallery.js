@@ -11,6 +11,7 @@
   var pictureListElement = document.querySelector('.pictures');
   var pictureCardTemple = document.querySelector('#picture').content.querySelector('.picture');
   var fragment = document.createDocumentFragment();
+  var PHOTOS = [];
 
   var openFilrtresBtn = function () {
     imgFiltres.classList.remove('img-filters--inactive');
@@ -36,8 +37,8 @@
   };
 
   var onSuccess = function (data) {
-    window.data.PHOTOS = data;
-    renderPictures(window.data.PHOTOS.slice(0));
+    PHOTOS = data;
+    renderPictures(PHOTOS.slice(0));
   };
 
   var createErrorMsg = function (errorMsg) {
@@ -75,18 +76,17 @@
     toggleClass(filterDiscussedButton, imgFiltresBtnActive);
   });
 
-  var getFiltres = function (item) {
+  var getFiltres = window.debounce(function (item) {
 
     cleanCardPicture();
-
     if (item.id === 'filter-popular') {
-      renderPictures(window.data.PHOTOS);
+      renderPictures(PHOTOS);
     } else if (item.id === 'filter-new') {
-      renderPictures(newRandomPosts(window.data.PHOTOS));
+      renderPictures(newRandomPosts(PHOTOS));
     } else if (item.id === 'filter-discussed') {
-      renderPictures(sortByComments(window.data.PHOTOS));
+      renderPictures(sortByComments(PHOTOS));
     }
-  };
+  });
 
   // чистит фотки
   var cleanCardPicture = function () {
