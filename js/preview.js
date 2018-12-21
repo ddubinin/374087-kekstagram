@@ -15,6 +15,7 @@
   var commentsLoader = bigPicture.querySelector('.comments-loader');
   var step = 0;
   var comments = [];
+  
 
   commentsLoader.addEventListener('click', function () {
     step = step + 5;
