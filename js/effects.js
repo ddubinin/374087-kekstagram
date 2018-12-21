@@ -14,7 +14,7 @@
   var effectLevelValue = document.querySelector('.effect-level__value');
   var positionPin;
   var positionPinPercents;
-  var effectMap = {
+  var EffectMap = {
     chrome: 'grayscale(1)',
     sepia: 'sepia(1)',
     marvin: 'invert(100%)',
@@ -22,7 +22,7 @@
     heat: 'brightness(3)',
     none: 'none'
   };
-  var scale = {
+  var Scale = {
     MIN: 25,
     MAX: 100,
     DAFAULT: 100,
@@ -32,6 +32,12 @@
   var resizePlus = document.querySelector('.scale__control--bigger'); // плюс
   var resizeInput = document.querySelector('.scale__control--value'); // инпут для ресайза
   resizeInput.value = '100%';
+
+  var defaultPicture = function () {
+    imgUploadPreview.style.transform = 'scale(1)';
+    resizeInput.value = '100%';
+    imgUploadPreview.style.filter = 'none';
+  };
 
   var setNoneFilter = function () {
     if (imgUploadPreview.className !== '') {
@@ -51,7 +57,7 @@
       imgUploadEffectLevel.classList.add('visually-hidden');
     }
 
-    imgUploadPreview.style.filter = effectMap[effectName];
+    imgUploadPreview.style.filter = EffectMap[effectName];
   };
 
   effectsItem.forEach(function (li) {
@@ -119,11 +125,11 @@
   // ресайз
   var resizeImage = function (sign) {
     var value = resizeInput.value;
-    value = parseInt(value, 10) + scale.STEP * sign;
-    if (value > scale.MAX) {
-      value = scale.MAX;
-    } else if (value < scale.MIN) {
-      value = scale.MIN;
+    value = parseInt(value, 10) + Scale.STEP * sign;
+    if (value > Scale.MAX) {
+      value = Scale.MAX;
+    } else if (value < Scale.MIN) {
+      value = Scale.MIN;
     }
     imgUploadPreview.style.transform = 'scale(' + value / 100 + ')';
     resizeInput.value = value + '%';
@@ -136,4 +142,7 @@
     resizeImage(1);
   });
 
+  window.effects = {
+    defaultPicture: defaultPicture // пойдет в form.js на закрытие или отправку
+  }
 })();

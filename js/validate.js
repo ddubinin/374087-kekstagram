@@ -47,18 +47,27 @@
     return '';
   };
 
-  var checkTagRepit = function (tags) {
-    var tagsMap = {};
-    var validationError = false;
-    tags.forEach(function (tag) {
-      if (tagsMap.hasOwnProperty(tag)) {
-        validationError = true;
-      } else {
-        tagsMap[tag] = true;
-      }
-    });
-    return validationError;
-  };
+  // var checkTagRepit = function (tags) {
+  //   var tagsMap = {};
+  //   var validationError = false;
+  //   tags.forEach(function (tag) {
+  //     if (tagsMap.hasOwnProperty(tag)) {
+  //       validationError = true;
+  //     } else {
+  //       tagsMap[tag] = true;
+  //     }
+  //   });
+  //   return validationError;
+  // };
+  var checkTagRepit = function(tags){
+  var double = tags.filter(function(tag, indx, tagsArr){
+    return indx!==tagsArr.indexOf(tag);
+  });
+  
+  return double.length>0;
+
+}
+
 
   window.validate = {
     hashTagsValidate: hashTagsValidate,

@@ -20,6 +20,13 @@
     focusOrBlur = false;
   });
 
+  textarea.addEventListener('focus', function () {
+    focusOrBlur = true;
+  });
+  textarea.addEventListener('blur', function () {
+    focusOrBlur = false;
+  });
+
   textarea.addEventListener('change', function (e) {
     var textValue = textarea.value;
     var validationResult = window.validate.descriptionValidate(textValue);
@@ -43,7 +50,9 @@
   };
 
   var uploadFormClose = function () {
+    window.effects.defaultPicture();
     uploadForm.classList.add('hidden');
+    hashtagInput.value = '';
     uploadInput.value = '';
     textarea.value = '';
     document.removeEventListener('keydown', uploadFormEscClose);
