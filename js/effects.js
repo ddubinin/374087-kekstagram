@@ -32,7 +32,7 @@
   var resizePlus = document.querySelector('.scale__control--bigger'); // плюс
   var resizeInput = document.querySelector('.scale__control--value'); // инпут для ресайза
   resizeInput.value = '100%';
-  
+
   var setNoneFilter = function () {
     if (imgUploadPreview.className !== '') {
       imgUploadPreview.classList.remove(imgUploadPreview.className);

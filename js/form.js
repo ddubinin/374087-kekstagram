@@ -25,7 +25,6 @@
     var validationResult = window.validate.descriptionValidate(textValue);
     e.target.setCustomValidity(validationResult);
   });
-  
 
   hashtagInput.addEventListener('change', function (e) {
     var val = hashtagInput.value.trim();
