@@ -3,9 +3,7 @@
   var MAX_START_COMMENT = 5;
   var ESC_KEYCODE = 27;
   var ENTER_KEYCODE = 13;
-
   var elementBody = document.body;
-
   var bigPicture = document.querySelector('.big-picture');
   var bigPictureImg = bigPicture.querySelector('.big-picture__img img');
   var bigPictureLikes = bigPicture.querySelector('.likes-count');
@@ -14,9 +12,7 @@
   var bigPictureCaption = bigPicture.querySelector('.social__caption');
   var commentsTemplate = bigPicture.querySelector('.social__comment');
   var bigPictureCancel = document.querySelector('.big-picture__cancel');
-
   var commentsLoader = bigPicture.querySelector('.comments-loader');
-
   var step = 0;
   var comments = [];
 
@@ -41,7 +37,6 @@
     } else {
       commentsLoader.classList.remove('visually-hidden');
     }
-
     bigPictureComments.appendChild(commentsFragment);
   };
 
@@ -61,7 +56,6 @@
     bigPictureImg.src = picture.url;
     bigPictureLikes.textContent = picture.likes;
     bigPictureCommentsCount.textContent = picture.comments.length;
-    // bigPictureComments.innerHTML = ';
     bigPictureCaption.textContent = picture.description;
   };
 

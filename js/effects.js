@@ -31,6 +31,7 @@
   var resizeMinus = document.querySelector('.scale__control--smaller'); // минус
   var resizePlus = document.querySelector('.scale__control--bigger'); // плюс
   var resizeInput = document.querySelector('.scale__control--value'); // инпут для ресайза
+  resizeInput.value = '100%';
 
   var setNoneFilter = function () {
     if (imgUploadPreview.className !== '') {
@@ -52,7 +53,6 @@
 
     imgUploadPreview.style.filter = effectMap[effectName];
   };
-
 
   effectsItem.forEach(function (li) {
     li.addEventListener('click', function (e) {
@@ -115,7 +115,6 @@
     document.addEventListener('mousemove', onMouseMove);
     document.addEventListener('mouseup', onMouseUp);
   });
-
 
   // ресайз
   var resizeImage = function (sign) {
