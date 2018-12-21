@@ -53,7 +53,6 @@
     imgUploadPreview.style.filter = effectMap[effectName];
   };
 
-
   effectsItem.forEach(function (li) {
     li.addEventListener('click', function (e) {
       setNoneFilter();

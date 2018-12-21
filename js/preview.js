@@ -15,7 +15,6 @@
   var commentsLoader = bigPicture.querySelector('.comments-loader');
   var step = 0;
   var comments = [];
-  
 
   commentsLoader.addEventListener('click', function () {
     step = step + 5;
@@ -38,7 +37,6 @@
     } else {
       commentsLoader.classList.remove('visually-hidden');
     }
-
     bigPictureComments.appendChild(commentsFragment);
   };
 

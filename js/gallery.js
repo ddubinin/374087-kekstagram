@@ -7,6 +7,7 @@
   var filterPopularButton = document.querySelector('#filter-popular');
   var filterNewButton = document.querySelector('#filter-new');
   var filterDiscussedButton = document.querySelector('#filter-discussed');
+  imgFiltres.classList.remove('img-filters--inactive');
   var pictureListElement = document.querySelector('.pictures');
   var pictureCardTemple = document.querySelector('#picture').content.querySelector('.picture');
   var fragment = document.createDocumentFragment();
