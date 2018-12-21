@@ -1,8 +1,6 @@
 'use strict';
 (function () {
   var MAX_START_COMMENT = 5;
-  var ESC_KEYCODE = 27;
-  var ENTER_KEYCODE = 13;
   var elementBody = document.body;
   var bigPicture = document.querySelector('.big-picture');
   var bigPictureImg = bigPicture.querySelector('.big-picture__img img');
@@ -60,13 +58,13 @@
   };
 
   var onEscKeydown = function (e) {
-    if (e.keyCode === ESC_KEYCODE) {
+    if (e.keyCode === window.data.ESC_KEYCODE) {
       closeBigPicture();
     }
   };
 
   var onCancelKeydown = function (e) {
-    if (e.keyCode === ENTER_KEYCODE) {
+    if (e.keyCode === window.data.ENTER_KEYCODE) {
       closeBigPicture();
     }
   };
