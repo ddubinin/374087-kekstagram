@@ -15,12 +15,12 @@
   var positionPin;
   var positionPinPercents;
   var EffectMap = {
-    chrome: 'grayscale(1)',
-    sepia: 'sepia(1)',
-    marvin: 'invert(100%)',
-    phobos: 'blur(3px)',
-    heat: 'brightness(3)',
-    none: 'none'
+    CHROME: 'grayscale(1)',
+    SEPIA: 'sepia(1)',
+    MARVIN: 'invert(100%)',
+    PHOBOS: 'blur(3px)',
+    HEAT: 'brightness(3)',
+    NONE: 'none'
   };
   var Scale = {
     MIN: 25,
@@ -57,7 +57,7 @@
       imgUploadEffectLevel.classList.add('visually-hidden');
     }
 
-    imgUploadPreview.style.filter = EffectMap[effectName];
+    imgUploadPreview.style.filter = EffectMap[effectName.toUpperCase()];
   };
 
   effectsItem.forEach(function (li) {
@@ -144,5 +144,5 @@
 
   window.effects = {
     defaultPicture: defaultPicture // пойдет в form.js на закрытие или отправку
-  }
+  };
 })();

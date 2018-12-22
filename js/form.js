@@ -30,17 +30,25 @@
   textarea.addEventListener('change', function (e) {
     var textValue = textarea.value;
     var validationResult = window.validate.descriptionValidate(textValue);
-    e.target.setCustomValidity(validationResult);
+    setValidationResult(e.target, validationResult);
   });
 
   hashtagInput.addEventListener('change', function (e) {
-    var val = hashtagInput.value.trim();
+    var val = hashtagInput.value.trim().toUpperCase();
     var tags = val.split(' ').filter(function (tag) {
       return tag !== '';
     });
     var validationResult = window.validate.hashTagsValidate(tags);
-    e.target.setCustomValidity(validationResult);
+    setValidationResult(e.target, validationResult);
   });
+
+  var setValidationResult = function (element, validationResult) {
+    element.style.border = 'none';
+    if (validationResult !== '') {
+      element.style.border = 'thick solid #FF0000';
+    }
+    element.setCustomValidity(validationResult);
+  };
 
   var uploadFormEscClose = function (evt) {
     if (evt.keyCode === window.data.ESC_KEYCODE && !focusOrBlur) {
@@ -55,11 +63,15 @@
     hashtagInput.value = '';
     uploadInput.value = '';
     textarea.value = '';
+    uploadInput.style.border = 'none';
     document.removeEventListener('keydown', uploadFormEscClose);
     uploadFormEsc.removeEventListener('click', uploadFormClose);
   };
 
   var uploadFormOpen = function () {
+    hashtagInput.style = '';
+    textarea.style = '';
+    uploadForm.querySelector('#effect-none').checked = true;
     uploadForm.classList.remove('hidden');
     imgUploadEffectLevel.classList.add('visually-hidden');
     uploadFormEsc.addEventListener('click', uploadFormClose);

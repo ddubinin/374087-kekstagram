@@ -55,9 +55,10 @@
             <form
               class="img-upload__form"
               id="upload-select-image"
-              method="post"
+              method="POST"
               enctype="multipart/form-data"
               autocomplete="off"
+              action="https://js.dump.academy/kekstagram"
             >
               <!-- Изначальное состояние поля для загрузки изображения -->
               <fieldset class="img-upload__start">
@@ -90,7 +91,7 @@
                       <input
                         type="text"
                         class="scale__control  scale__control--value"
-                        value="55%"
+                        value="100%"
                         title="Image Scale"
                         name="scale"
                         readonly
@@ -251,6 +252,7 @@
                       class="text__description"
                       name="description"
                       placeholder="Ваш комментарий..."
+
                     ></textarea>
                   </fieldset>
 
